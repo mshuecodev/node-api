@@ -39,18 +39,16 @@ const toggleTodo = async (req, res) => {
 	}
 }
 
-const deleteTodo = async (req, res) => {
+const deleteTodo = (req, res, next) => {
 	const { _id } = req.params
-	try {
-		const todo = await todoModel.findById(_id)
-		if (!todo) {
-			return res.status(404).json({ message: "Todo not found!" })
-		}
-		await todo.remove()
-		res.json({ message: "Todo deleted" })
-	} catch (error) {
-		next(error)
-	}
+	todoModel
+		.findOneAndDelete({ _id })
+		.then((response) => {
+			res.json({ message: "Deleted!" })
+		})
+		.catch((error) => {
+			next(error)
+		})
 }
 
 module.exports = {

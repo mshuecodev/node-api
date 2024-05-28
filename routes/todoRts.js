@@ -5,7 +5,7 @@ const router = express.Router()
 
 router.get("/", getTodos)
 router.post("/", addTodo)
-router.put("/:id", toggleTodo)
-router.delete("/:id", deleteTodo)
+router.put("/:_id", toggleTodo)
+router.delete("/:_id", deleteTodo)
 
 module.exports = router
