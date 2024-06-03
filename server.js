@@ -25,9 +25,11 @@ mongoose
 // route endpoint
 const todoRts = require("./routes/todoRts")
 const weatherRts = require("./routes/weatherRts")
+const transactionRts = require("./routes/transactionRts")
 
 app.use("/todo", todoRts)
 app.use("/weather", weatherRts)
+app.use("/trackmoney", transactionRts)
 
 // Root route
 app.get("/", (req, res) => {
