@@ -1,21 +1,21 @@
 const contactModel = require("../models/contact")
 
-const getContacts = async (req, res) => {
+const getContacts = async (req, res, next) => {
 	try {
-		const todo = await contactModel.find({})
-		res.json(todo)
+		const data = await contactModel.find({})
+		res.json(data)
 	} catch (error) {
 		next(error)
 	}
 }
 
-const addContact = async (req, res) => {
+const addContact = async (req, res, next) => {
 	try {
-		const newTodo = new contactModel(req.body)
+		const newData = new contactModel(req.body)
 
 		try {
-			await newTodo.save()
-			res.json(newTodo)
+			await newData.save()
+			res.json(newData)
 		} catch (error) {
 			next(error)
 		}
@@ -24,17 +24,13 @@ const addContact = async (req, res) => {
 	}
 }
 
-const toggleContact = async (req, res) => {
+const toggleContact = async (req, res, next) => {
 	const { _id } = req.params
 	const reqbody = req.body
 	try {
-		const todo = await contactModel.findById(_id)
-		if (!todo) {
-			return res.status(404).json({ message: "Todo not found!" })
-		}
-		todo.completed = !todo.completed
-		await todo.save()
-		res.json(todo)
+		let data = await contactModel.findByIdAndUpdate(_id, reqbody)
+
+		res.status(200).json(data)
 	} catch (error) {
 		next(error)
 	}
